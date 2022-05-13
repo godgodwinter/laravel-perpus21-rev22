@@ -171,14 +171,14 @@ $message=session('status');
                       @enderror
                   </div>
 
-                    {{-- <div class="form-group col-md-6 col-6">
+                    <div class="form-group col-md-6 col-6">
                       <label for="defaultmaxharipinjam">Jumlah Maximal Hari Peminjaman</label>
                       <input type="text" name="defaultmaxharipinjam" id="defaultmaxharipinjam"
                           class="form-control @error('defaultmaxharipinjam') is-invalid @enderror"
                           placeholder="" value="{{ Fungsi::defaultmaxharipinjam() }}" required min="1">
                       @error('defaultmaxharipinjam')<div class="invalid-feedback"> {{$message}}</div>
                       @enderror
-                  </div> --}}
+                  </div>
 
                           </div>
 
