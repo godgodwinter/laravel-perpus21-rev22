@@ -201,6 +201,7 @@ class adminbukucontroller extends Controller
                 'penerbit'     =>   $request->penerbit,
                 'tahunterbit'     =>   $request->tahunterbit,
                 'bahasa'     =>   $request->bahasa,
+                'rak'     =>   $request->rak,
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s")
             )
@@ -348,6 +349,7 @@ class adminbukucontroller extends Controller
                 'tempatterbit'     =>   $request->tempatterbit,
                 'tahunterbit'     =>   $request->tahunterbit,
                 'bahasa'     =>   $request->bahasa,
+                'rak'     =>   $request->rak,
                 'updated_at' => date("Y-m-d H:i:s")
             ]);
     }

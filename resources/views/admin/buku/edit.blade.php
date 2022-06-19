@@ -266,6 +266,15 @@ $message=session('status');
                     @enderror
                 </div>
 
+                <div class="form-group col-md-12 col-12">
+                    <label>RAK  <code></code></label>
+                    <input type="text" name="rak" id="rak"
+                        class="form-control @error('rak') is-invalid @enderror" placeholder=""
+                        value="{{$datas->rak}}" required>
+                    @error('rak')<div class="invalid-feedback"> {{$message}}</div>
+                    @enderror
+                </div>
+
                   <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Kode Buku</span>

@@ -54,6 +54,7 @@ $message=session('status');
     <th class="text-center"> Buku Tersedia </th>
     <th class="text-center"> Jumlah akan dipinjam </th>
     <th class="text-center"> Dipinjam </th>
+    <th class="text-center">  Rak </th>
     <th width="100px" class="text-center">Aksi</th>
 </tr>
 @endsection
@@ -185,6 +186,7 @@ $message=session('status');
 
     </td>
 
+    <td class="text-center">{{$data->rak}}</td>
     <td class="text-center">
         <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
         <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
@@ -532,6 +534,15 @@ $message=session('status');
                                     class="form-control @error('bukukategori_ddc') is-invalid @enderror" placeholder=""
                                     value="{{old('bukukategori_ddc')}}" required>
                                 @error('bukukategori_ddc')<div class="invalid-feedback"> {{$message}}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group col-md-12 col-12">
+                                <label>RAK  <code></code></label>
+                                <input type="text" name="rak" id="rak"
+                                    class="form-control @error('rak') is-invalid @enderror" placeholder=""
+                                    value="{{old('rak')}}" required>
+                                @error('rak')<div class="invalid-feedback"> {{$message}}</div>
                                 @enderror
                             </div>
 
