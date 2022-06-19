@@ -79,7 +79,7 @@ $message=session('status');
                             </div>
 
                             <div class="col-3">
-                                <a href="{{url('/admin/datakeuangan/cetak/'.$bln)}}" type="submit" value="cetak" id="blncetak"
+                                <a href="{{url('/admin/datakeuangan/cetakbaru/'.$blnawal.'/'.$bln)}}" type="submit" value="cetak" id="blncetak"
                                  class="btn btn-icon btn-default btn-md"><span class="pcoded-micon"> <i class="fas fa-print"></i>   Cetak PDF </span></a>
                             </div>
                         </div>

@@ -59,8 +59,8 @@ $message=session('status');
         <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
-                        {{-- <div class="row">
-                            <div class="col-6 mr-4">
+                        <div class="row">
+                            {{-- <div class="col-6 mr-4">
                                 <form action="{{ route('admin.laporan.keuangan') }}" method="GET">
                                 <div class="form-group d-flex px-2">
 
@@ -76,13 +76,14 @@ $message=session('status');
 
                                 </div></form>
 
-                            </div>
+                            </div> --}}
 
                             <div class="col-3">
-                                <a href="{{url('/admin/datakeuangan/cetak/'.$bln)}}" type="submit" value="cetak" id="blncetak"
+
+                                <a href="{{url('/admin/datakeuangan/cetakbaru/'.$blnawal.'/'.$bln."/all")}}" type="submit" value="cetak" id="blncetak"
                                  class="btn btn-icon btn-default btn-md"><span class="pcoded-micon"> <i class="fas fa-print"></i>   Cetak PDF </span></a>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="form-group">
                         </div>
                     </div>

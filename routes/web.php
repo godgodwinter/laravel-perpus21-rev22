@@ -223,6 +223,8 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
     Route::get('admin/datakeuangan/cetak/{bln}', 'App\Http\Controllers\laporanController@cetakkeuangan')->name('keuangan.cetak');
     Route::get('admin/datapeminjaman/cetak/{bln}/{status}/{cari}', 'App\Http\Controllers\laporanController@cetakpeminjaman')->name('peminjaman.cetak');
     Route::get('admin/databuku/cetak/checked', 'App\Http\Controllers\adminbukucontroller@cetakchecked')->name('buku.checked.cetak');
+    Route::get('admin/datakeuangan/cetakbaru/{blnawal}/{bln}', 'App\Http\Controllers\laporanController@cetakkeuanganbaru')->name('keuangan.cetak.baru');
+    Route::get('admin/datakeuangan/cetakbaru/{blnawal}/{bln}/all', 'App\Http\Controllers\laporanController@cetakkeuanganbaruall')->name('keuangan.cetak.baru.all');
 
     Route::get('/pustakawan/buku', 'App\Http\Controllers\pustakawancontroller@buku')->name('pustakawan.buku');
 
