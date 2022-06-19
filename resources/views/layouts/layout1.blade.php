@@ -45,10 +45,10 @@ crossorigin="anonymous"></script> --}}
         <a href="{{ route("admin.buku") }}" class="nav-link">Pilih Buku</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route("admin.peminjaman") }}" class="nav-link" id="jmldatabuku">Pinjam</a>
+        <a href="{{ route("admin.peminjaman") }}" class="nav-link" id="jmldatabuku">Peminjaman</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route("admin.pengembalian") }}" class="nav-link"  id="jmldatabukukembali">Kembalikan</a>
+        <a href="{{ route("admin.pengembalian") }}" class="nav-link"  id="jmldatabukukembali">Pengembalian</a>
       </li>
       {{-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Anggota</a>

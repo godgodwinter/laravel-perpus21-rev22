@@ -106,40 +106,10 @@ $message=session('status');
                                             //     ->count();
                                             $dataselect=DB::table('buku')
                                                 ->get();
-
-
                                                 @endphp
-    <script>
-    // let dataLocal =null;
-    // let dataLocalParse=null;
-    // let dataawal=0;
-    // let dataakhir=0;
-    </script>
+
                                             @foreach ($dataselect as $t)
-                                            @php
-                                        $jmltersedia=DB::table('bukudetail')
-                                            ->where('status','ada')
-                                            ->where('buku_kode',$t->kode)
-                                            ->count();
-                                            @endphp
                                                 <option value="{{ $t->kode }}" >{{ $t->kode }} - {{ $t->nama }}</option>
-
-                                                <script>
-                                                    // // docready
-                                                    // $(document).ready(function(){
-                                                    // //get from localstorage
-                                                    // dataawal= $('#tersedia-{{ $t->kode }}').text();
-                                                    //  dataLocal = localStorage.getItem('{{ $t->kode }}');
-                                                    //  dataLocalParse=JSON.parse(dataLocal);
-                                                    // if(dataLocal){
-                                                    // // console.log(dataLocalParse.jml,dataLocalParse);
-                                                    // dataakhir=parseInt(dataawal)-parseInt(dataLocalParse.jml)
-                                                    // console.log(dataawal,dataakhir);
-                                                    //     // $('#tersedia-{{ $t->kode }}').innerHtml(dataakhir);
-                                                    // }
-                                                    //     });
-                                                </script>
-
                                             @endforeach
                                             </select>
                                         </div>
@@ -151,21 +121,12 @@ $message=session('status');
                                         </div> --}}
 
                                         <div class="form-group col-md-12 col-12">
-                                            <label for="jml">Buku  Tersedia : <code><span id="bukuTersedia">0</span> Buku</code></label>
-
-                                        </div>
-                                        <div class="form-group col-md-12 col-12">
                                             <label for="jml">Jumlah dipinjam<code>*)</code></label>
                                             <input type="number" name="jml" id="jml" class="form-control" placeholder="" value="" disabled
                                                 required>
                                         </div>
                                         <div class="form-group col-md-12 col-12">
-                                            @php
-                                                $getMaxPinjam=\App\Models\settings::first();
-                                                $maxPinjam=$getMaxPinjam->defaultmaxbukupinjam;
-                                            @endphp
-                                            <code>Clear data Jika ada data Undefine.</code><br>
-                                            <code>Max buku dipinjam : <span id="maxPinjam">{{ $maxPinjam }}</span>  Buku</code>
+                                            <code>Clear data Jika ada data Undefine.</code>
                                         </div>
 
                                     </div>
@@ -391,8 +352,6 @@ $message=session('status');
                                                             $("input#jml").prop('max', tersedia);
 
                                                         }
-                                            // alert(`Tersedia : ${tersedia} 2`);
-                                            $('#bukuTersedia').text(tersedia);
                                                             }else{
 
                                                                 //  maxdata = 0;
@@ -417,8 +376,6 @@ $message=session('status');
                                                                     title:
                                                                         'Buku tidak tersedia! atau telah dipinjam semua '
                                                                 });
-                                            // alert(`Tersedia : ${tersedia} 2`);
-                                            $('#bukuTersedia').text(0);
                                                             }
                                                     }
                                                 }
@@ -426,44 +383,10 @@ $message=session('status');
 
 
                                 });
-                                $(document).ready(function () {
-
-                                    $(function () {
-                                    //     var dataTotalBukuDipinjam = 0;
-                                    //             for (i = 0; i < localStorage.length; i++)
-                                    //             {
-                                    //                 var obj = localStorage.getItem(localStorage.key(i));
-                                    //                 var buku = JSON.parse(obj);
-                                    //                 // alert(buku.kode);
-                                    // //                 data_i = JSON.parse(localStorage.getItem(daftarbuku[i]));
-                                    // //         // data.i = JSON.parse(localStorage.getItem('data-'+1234));
-                                    //             dataTotalBukuDipinjam+=buku.jml;
-                                    //             }
-                                    //             // console.log(dataTotalBukuDipinjam);
-                                            });
 
                                 document.querySelector('#isikan').addEventListener('click', function (
                                         e) {
-                                            jml = $("input[name=jml]").val();
-                                            let dataTotalBukuDipinjam =  $('#totalBukuDipinjam').text();
-                                            let dataMaxPinjam =  $('#maxPinjam').text();
-                                            let totalBukuDipinjam = parseInt(dataTotalBukuDipinjam) + parseInt(jml);
-                                                console.log(totalBukuDipinjam,dataMaxPinjam);
-                                            if(parseInt(totalBukuDipinjam)> parseInt(dataMaxPinjam)){
-                                                var Toast = Swal.mixin({
-                                                    toast: true,
-                                                    position: 'top-end',
-                                                    showConfirmButton: false,
-                                                    timer: 3000
-                                                });
 
-                                                Toast.fire({
-                                                    icon: 'error',
-                                                    title:
-                                                        `Maksimal ${dataMaxPinjam} buku yang dapat dipinjam`
-                                                });
-
-                                            }else{
                                             jml = $("input[name=jml]").val();
                                             // jmlbuku=jml;
                                             if(parseInt(jml)>parseInt(tersedia)){
@@ -564,15 +487,13 @@ $message=session('status');
 
                                             }
                                         }
-                                    }
-                                        });
                                         });
                               </script>
 
                                 {{-- </form> --}}
                                 <script>
                                     $(function () {
-                                        var dataTotalBukuDipinjam = 0;
+
                                                 for (i = 0; i < localStorage.length; i++)
                                                 {
                                                     var obj = localStorage.getItem(localStorage.key(i));
@@ -580,8 +501,6 @@ $message=session('status');
                                                     // alert(buku.kode);
                                     //                 data_i = JSON.parse(localStorage.getItem(daftarbuku[i]));
                                     //         // data.i = JSON.parse(localStorage.getItem('data-'+1234));
-                                                dataTotalBukuDipinjam+=buku.jml;
-                                    // console.log(buku.jml);
                                             $("#forminputan").append(
                                             '<input name="daftarbuku['+i+'][kode]" type="hidden" id="inputdaftarbuku" value="'+buku.kode+'" /><input name="daftarbuku['+i+'][jml]" type="hidden" id="inputdaftarbuku" value="'+buku.jml+'" />');
 
@@ -609,7 +528,6 @@ $message=session('status');
                                         location.reload();
                                     });
                                                 }
-                                                $("#totalBukuDipinjam").html(dataTotalBukuDipinjam);
 
 
 
@@ -657,7 +575,7 @@ $message=session('status');
             <div class="card">
                 <div class="card-body">
 
-                    <h4>Total buku : <span id="totalBukuDipinjam">0</span> Buku</h4>
+
                     <div class="card-body -mt-5">
                         <div class="table-responsive">
                             <table class="table table-bordered table-md">
