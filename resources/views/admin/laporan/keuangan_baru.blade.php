@@ -186,8 +186,6 @@ $message=session('status');
 
             </tbody>
         </table>
-        <hr>
-        <hr>
         <table class="table  projects">
           <tbody id="tampilsaldo">
               <tr>
