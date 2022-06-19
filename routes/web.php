@@ -70,8 +70,11 @@ Route::group(['middleware' => ['auth:web', 'verified']], function () {
     //laporan-MENU
     Route::get('/admin/laporan/peminjaman', 'App\Http\Controllers\laporanController@laporanpeminjaman')->name('admin.laporan.peminjaman');
     Route::get('/admin/laporan/api/peminjaman', 'App\Http\Controllers\laporanController@apipeminjaman')->name('admin.laporan.api.peminjaman');
-    Route::get('/admin/laporan/keuangan', 'App\Http\Controllers\laporanController@laporankeuangan')->name('admin.laporan.keuangan');
+    // Route::get('/admin/laporan/keuangan', 'App\Http\Controllers\laporanController@laporankeuangan')->name('admin.laporan.keuangan');
     Route::get('/admin/laporan/api/keuangan', 'App\Http\Controllers\laporanController@apikeuangan')->name('admin.laporan.api.keuangan');
+
+    Route::get('/admin/laporan/keuangan', 'App\Http\Controllers\laporanController@laporankeuangan_baru')->name('admin.laporan.keuangan');
+    Route::get('/admin/laporan/keuangan/cari', 'App\Http\Controllers\laporanController@laporankeuangan_barucari')->name('admin.laporan.keuangan.cari');
 
     //chart-MENU
     Route::get('/admin/api/chart1', 'App\Http\Controllers\laporanController@apichart1')->name('admin.api.chart1');

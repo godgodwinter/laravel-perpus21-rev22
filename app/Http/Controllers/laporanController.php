@@ -179,6 +179,97 @@ class laporanController extends Controller
         // return view('admin.beranda');
     }
 
+
+    public function laporankeuangan_baru(Request $request)
+    {
+        if ($this->checkauth('admin') === '404') {
+            return redirect(URL::to('/') . '/404')->with('status', 'Halaman tidak ditemukan!')->with('tipe', 'danger')->with('icon', 'fas fa-trash');
+        }
+        // dd($id);
+
+        #WAJIB
+        $pages = 'keuangan';
+        $jmldata = '0';
+        $datas = '0';
+        $blnawal = $request->blnawal ? $request->blnawal : date('Y') . "-01";
+        $monthAwal = date("m", strtotime($blnawal));
+        $yearAwall = date("Y", strtotime($blnawal));
+        $bln = $request->bln ? $request->bln : date('Y-m');
+        $month = date("m", strtotime($bln));
+        $year = date("Y", strtotime($bln));
+
+        $datas = DB::table('pengeluaran')
+            ->whereMonth('tglbayar', ">=", $monthAwal)
+            ->whereYear('tglbayar', ">=", $yearAwall)
+            ->whereMonth('tglbayar', "<=", $month)
+            ->whereYear('tglbayar', "<=", $year)
+            ->orderBy('tglbayar', 'desc')->get();
+
+        $jml = DB::table('pengeluaran')
+            ->whereMonth('tglbayar', ">=", $monthAwal)
+            ->whereYear('tglbayar', ">=", $yearAwall)
+            ->whereMonth('tglbayar', "<=", $month)
+            ->whereYear('tglbayar', "<=", $year)
+            ->orderBy('tglbayar', 'desc')->count();
+
+        $totalnominal = DB::table('pengeluaran')
+            ->whereMonth('tglbayar', ">=", $monthAwal)
+            ->whereYear('tglbayar', ">=", $yearAwall)
+            ->whereMonth('tglbayar', "<=", $month)
+            ->whereYear('tglbayar', "<=", $year)
+            ->orderBy('tglbayar', 'desc')
+            ->sum('nominal');
+
+        $datas2 = DB::table('pemasukan')
+            ->whereMonth('tglbayar', ">=", $monthAwal)
+            ->whereYear('tglbayar', ">=", $yearAwall)
+            ->whereMonth('tglbayar', "<=", $month)
+            ->whereYear('tglbayar', "<=", $year)
+            ->orderBy('tglbayar', 'desc')->get();
+
+        $jml2 = DB::table('pemasukan')
+            ->whereMonth('tglbayar', ">=", $monthAwal)
+            ->whereYear('tglbayar', ">=", $yearAwall)
+            ->whereMonth('tglbayar', "<=", $month)
+            ->whereYear('tglbayar', "<=", $year)
+            ->orderBy('tglbayar', 'desc')->count();
+
+        $totalnominal2 = DB::table('pemasukan')
+            ->whereMonth('tglbayar', ">=", $monthAwal)
+            ->whereYear('tglbayar', ">=", $yearAwall)
+            ->whereMonth('tglbayar', "<=", $month)
+            ->whereYear('tglbayar', "<=", $year)
+            ->orderBy('tglbayar', 'desc')->sum('nominal');
+
+        $datasdenda = DB::table('pengembaliandetail')
+            ->whereMonth('tgl_dikembalikan', ">=", $monthAwal)
+            ->whereYear('tgl_dikembalikan', ">=", $yearAwall)
+            ->whereMonth('tgl_dikembalikan', "<=", $month)
+            ->whereYear('tgl_dikembalikan', "<=", $year)
+            ->orderBy('tgl_dikembalikan', 'desc')->get();
+
+        $jmldenda = DB::table('pengembaliandetail')
+            ->whereMonth('tgl_dikembalikan', ">=", $monthAwal)
+            ->whereYear('tgl_dikembalikan', ">=", $yearAwall)
+            ->whereMonth('tgl_dikembalikan', "<=", $month)
+            ->whereYear('tgl_dikembalikan', "<=", $year)
+            ->orderBy('tgl_dikembalikan', 'desc')->count();
+
+        $totalnominaldenda = DB::table('pengembaliandetail')
+            ->whereMonth('tgl_dikembalikan', ">=", $monthAwal)
+            ->whereYear('tgl_dikembalikan', ">=", $yearAwall)
+            ->whereMonth('tgl_dikembalikan', "<=", $month)
+            ->whereYear('tgl_dikembalikan', "<=", $year)
+            ->orderBy('tgl_dikembalikan', 'desc')->sum('totaldenda');
+        // ->orderBy('isbn','asc')
+        // ->paginate(Fungsi::paginationjml());
+
+        // $bukurak = DB::table('bukurak')->get();
+        // $bukukategori = DB::table('kategori')->where('prefix','ddc')->get();
+
+        return view('admin.laporan.keuangan_baru', compact('pages', 'datas', 'datas2', 'request', 'jml', 'jml2', 'totalnominal', 'totalnominal2', 'datasdenda', 'jmldenda', 'totalnominaldenda', 'blnawal', 'bln'));
+        // return view('admin.beranda');
+    }
     public function cetakkeuangan($bln)
     {
 
@@ -419,6 +510,9 @@ class laporanController extends Controller
 
         $jmldenda = DB::table('pengembaliandetail')->whereMonth('tgl_dikembalikan', $month)->whereYear('tgl_dikembalikan', $year)->skip(0)->take(10)
             ->count();
+        $totalnominaldenda = DB::table('pengembaliandetail')->whereMonth('tgl_dikembalikan', $month)->whereYear('tgl_dikembalikan', $year)->orderBy('tgl_dikembalikan', 'desc')->sum('totaldenda');
+
+        // totalnominaldenda
 
 
         $datasdenda = DB::table('pengembaliandetail')->whereMonth('tgl_dikembalikan', $month)->whereYear('tgl_dikembalikan', $year)->skip(0)->take(10)
@@ -430,7 +524,7 @@ class laporanController extends Controller
         $firstdenda = DB::table('pengembaliandetail')->whereMonth('tgl_dikembalikan', $month)->whereYear('tgl_dikembalikan', $year)->skip(0)->take(10)
             ->first();
 
-        // $sumsaldo=($sumpemasukan+$sumdenda)-$sumpengeluaran;
+        $sumsaldo = ($sumpemasukan + $sumdenda) - $sumpengeluaran;
         $sumsaldo = ($sumpemasukan - $sumpengeluaran);
         $outputsaldo = '';
         if ($jmlpemasukan > 0) {
@@ -540,59 +634,58 @@ class laporanController extends Controller
         }
 
 
+        // dd($jmldenda);
+        if ($totalnominaldenda > 0) {
 
-        // if($jmldenda>0){
+            $no = 0;
+            $outputdenda .= '
+                    <tr  class="thead-dark">
+                        <th colspan="2">
+                        Data  Denda
+                        </th>
 
-        //     $no=0;
-        //             $outputdenda .= '
-        //             <tr  class="thead-dark">
-        //                 <th colspan="2">
-        //                 Data  Denda
-        //                 </th>
+                        <th style="width: 18%" class="text-center">
+                            ' . $jmldenda . ' Transaksi
+                        </th>
+                        <th style="width: 18%" class="text-center">
+                        <small>   Total Nominal :</small><br>
+                            <strong>' . Fungsi::rupiah($totalnominaldenda) . '</strong>
+                        </th>
 
-        //                 <th style="width: 18%" class="text-center">
-        //                     '.$jmldenda.' Transaksi
-        //                 </th>
-        //                 <th style="width: 18%" class="text-center">
-        //                 <small>   Total Nominal :</small><br>
-        //                     <strong>'.Fungsi::rupiah($sumdenda).'</strong>
-        //                 </th>
+                    </tr>
+                    ';
+            foreach ($datasdenda as $data) {
 
-        //             </tr>
-        //             ';
-        //         foreach($datasdenda as $data){
+                $no++;
+                $outputdenda .= '
 
-        //             $no++;
-        //         $outputdenda .= '
+                <tr>
+                <td>
+                    ' . $no . '
+                </td>
+                <td >
+                       ' . $data->buku_nama . '
 
-        //         <tr>
-        //         <td>
-        //             '.$no.'
-        //         </td>
-        //         <td >
-        //                '.$data->buku_nama.'
+                </td>
+                <td class="text-center">
+                ' . Fungsi::tanggalindo($data->tgl_dikembalikan) . '
+                </td>
 
-        //         </td>
-        //         <td class="text-center">
-        //         '.Fungsi::tanggalindo($data->tgl_dikembalikan).'
-        //         </td>
+                <td class="project-state">
+                    ' . Fungsi::rupiah($data->totaldenda) . '
+                </td>
 
-        //         <td class="project-state">
-        //             '.Fungsi::rupiah($data->totaldenda).'
-        //         </td>
+            </tr>
 
-        //     </tr>
-
-        //         ';
-        //         }
-        //  }else{
-        //     $outputdenda = '
-        //     <tr>
-        //      <td align="center" colspan="5">No Data Found</td>
-        //     </tr>
-        //     ';
-
-        //  }
+                ';
+            }
+        } else {
+            $outputdenda = '
+            <tr>
+             <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
 
         $outputsaldo .= '
 

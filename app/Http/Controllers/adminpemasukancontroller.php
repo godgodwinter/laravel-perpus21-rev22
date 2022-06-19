@@ -28,7 +28,9 @@ class adminpemasukancontroller extends Controller
 
         $month = date('m');
         $year = date('Y');
-        $totalnominaldenda = DB::table('pengembaliandetail')->whereMonth('tgl_dikembalikan', $month)->whereYear('tgl_dikembalikan', $year)->orderBy('tgl_dikembalikan', 'desc')->sum('totaldenda');
+        $totalnominaldenda = DB::table('pengembaliandetail')
+            // ->whereMonth('tgl_dikembalikan', $month)->whereYear('tgl_dikembalikan', $year)
+            ->orderBy('tgl_dikembalikan', 'desc')->sum('totaldenda');
         $dataDenda = (object)[];
         $bln = Fungsi::tanggalindobln("01-{$month}-{$year}");
         $dataDenda->nama = "Denda Bulan {$bln} {$year}";

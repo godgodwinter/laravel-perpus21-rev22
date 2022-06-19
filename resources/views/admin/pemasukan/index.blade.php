@@ -114,9 +114,16 @@ $message=session('status');
 <tr >
     <td class="text-center">
         {{ ((count($datas)+1)) }} </td>
-    <td>{{ $dataDenda->nama }}</td>
+    <td>Total Denda
+        {{-- Bulan --}}
+         {{-- {{ Fungsi::tanggalindonotgl($dataDenda->tglbayar) }} --}}
+    </td>
     <td>Denda</td>
-    <td>{{ Fungsi::tanggalindo($dataDenda->tglbayar) }}</td>
+    <td>
+        Semua
+        {{-- {{ Fungsi::tanggalindonotgl($dataDenda->tglbayar) }} --}}
+
+    </td>
     <td>{{ Fungsi::rupiah($dataDenda->nominal) }}</td>
 
     <td class="text-center">
