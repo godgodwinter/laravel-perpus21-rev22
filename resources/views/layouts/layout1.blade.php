@@ -343,6 +343,12 @@ crossorigin="anonymous"></script> --}}
                   <p>Laporan Keuangan</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('admin.laporan.keuangan.all')}}" class="nav-link">
+                  <i class="fas fa-money-check-alt"></i>
+                  <p>Laporan Keuangan Keseluruhan</p>
+                </a>
+              </li>
 
 
               @else
