@@ -110,6 +110,22 @@ $message=session('status');
 </tr>
 @endforeach
 
+@if ($dataDenda)
+<tr >
+    <td class="text-center">
+        {{ ((count($datas)+1)) }} </td>
+    <td>{{ $dataDenda->nama }}</td>
+    <td>Denda</td>
+    <td>{{ Fungsi::tanggalindo($dataDenda->tglbayar) }}</td>
+    <td>{{ Fungsi::rupiah($dataDenda->nominal) }}</td>
+
+    <td class="text-center">
+
+    </td>
+</tr>
+
+@endif
+
 <tr>
     <td class="text-left" colspan="6">
         <a href="#" class="btn btn-sm  btn-danger" id="deleteAllSelectedRecord"
@@ -265,7 +281,7 @@ $message=session('status');
                                         <option>{{old('kategori_nama')}}</option>
                                         @endif
                                         <option>Umum</option>
-                                        <option>Denda</option>
+                                        {{-- <option>Denda</option> --}}
                                         <option>Pengembalian Dan</option>
                                         <option>Dana Hibah</option>
                                     </select>
@@ -354,6 +370,8 @@ $message=session('status');
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                        <a href="{{ asset('assets/doc/perpus-pemasukan.xlsx') }}" target="_blank"><button type="button" class="btn btn-success" >Contoh Data</button></a>
+
                       </div>
                       <div class="modal-body">
 

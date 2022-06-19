@@ -2,7 +2,7 @@
 {{-- @extends('admin.pages.beranda') --}}
 
 
-@section('title','Buku')
+@section('title','Pemesanan Buku')
 @section('linkpages')
 data{{ $pages }}
 @endsection
@@ -47,14 +47,14 @@ $message=session('status');
 @section('headtable')
 <tr>
     <th width="80px" class="text-center">
-        <input type="checkbox" id="chkCheckAll"> <label for="chkCheckAll"> All</label></th>
+        {{-- <input type="checkbox" id="chkCheckAll">  --}}
+        <label for="chkCheckAll"> No</label></th>
     <th> KD Buku - Judul Buku </th>
     <th class="text-center"> Pengarang </th>
     <th class="text-center"> Jumlah </th>
     <th class="text-center"> Buku Tersedia </th>
-    <th class="text-center"> Jumlah akan dipinjam </th>
+    <th class="text-center">  Jumlah Akan di pinjam </th>
     <th class="text-center"> Dipinjam </th>
-    <th width="100px" class="text-center">Aksi</th>
 </tr>
 @endsection
 
@@ -130,7 +130,9 @@ $message=session('status');
 </script>
 @foreach ($datas as $data)
 <tr id="sid{{ $data->id }}">
-    <td class="text-center"> <input type="checkbox" name="ids" class="checkBoxClass " value="{{ $data->id }}">
+    <td class="text-center">
+        {{-- <input type="checkbox" name="ids" class="checkBoxClass " value="{{ $data->id }}"> --}}
+
         {{ ((($loop->index)+1)+(($datas->currentPage()-1)*$datas->perPage())) }}</td>
     <td>
         <a class="btn btn-icon btn-light btn-sm " href="{{ url('/admin/buku/') }}/{{ $data->id }}/bukudetail"  data-toggle="tooltip" data-placement="top" title=" {{ $data->nama }}">
@@ -178,6 +180,7 @@ $message=session('status');
         </div>
 
     </td>
+
     <td class="text-center">
         {{-- <a href="{{ route("admin.pengembalian")}}" class="btn btn-icon btn-light btn-sm "  data-toggle="tooltip" data-placement="top" title="Kembalikan!" >  --}}
         {{$cekjmldipinjam}}
@@ -185,10 +188,7 @@ $message=session('status');
 
     </td>
 
-    <td class="text-center">
-        <x-button-edit link="/admin/{{ $pages }}/{{$data->id}}" />
-        <x-button-delete link="/admin/{{ $pages }}/{{$data->id}}" />
-    </td>
+
 </tr>
 <script>
     // alert({{$cekjmlada}});
@@ -307,7 +307,7 @@ $message=session('status');
 
 <tr>
     <td class="text-left" colspan="8">
-        <form action="{{route('buku.checked.cetak')}}" method="get">
+        {{-- <form action="{{route('buku.checked.cetak')}}" method="get">
             @csrf
 
         <a href="#" class="btn btn-sm  btn-danger" id="deleteAllSelectedRecord"
@@ -321,7 +321,7 @@ $message=session('status');
             <input type="hidden" name="databukuchecked" class="databukuchecked " id="databukuchecked" value="">
             <button href="#" type="submit" value="cetak" id="tombolcetak"
             class="btn btn-icon btn-default btn-sm ml-2" disabled  data-toggle="tooltip" data-placement="top" title="Tekan tombol Buat link cetak dahulu"><span class="pcoded-micon" > <i class="fas fa-print"></i>   Cetak PDF </span></button>
-        </form>
+        </form> --}}
         </td>
 </tr>
 
@@ -401,19 +401,7 @@ $message=session('status');
                     </div>
                     <div class="form-group col-md-4 col-4 mt-1 text-right">
 
-                        <button type="button" class="btn btn-icon btn-primary btn-sm" data-toggle="modal"
-                        data-target="#add"><i class="fas fa-plus"></i>
-                        Tambah
-                    </button>
 
-                        <button type="button" class="btn btn-icon btn-primary btn-sm" data-toggle="modal"
-                            data-target="#importExcel"><i class="fas fa-upload"></i>
-                            Import
-                        </button>
-
-                        <a href="/admin/@yield('linkpages')/export" type="submit" value="Import"
-                            class="btn btn-icon btn-primary btn-sm"><span class="pcoded-micon"> <i
-                                    class="fas fa-download"></i> Export </span></a>
                     </div>
 
 

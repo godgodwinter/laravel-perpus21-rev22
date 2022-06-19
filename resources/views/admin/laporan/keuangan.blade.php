@@ -75,10 +75,10 @@ $message=session('status');
                                         value="{{$bln}}" required>
 
                                 </div>
-                                
+
                             </div>
-                                   
-                            <div class="col-3">       
+
+                            <div class="col-3">
                                 <a href="{{url('/admin/datakeuangan/cetak/'.$bln)}}" type="submit" value="cetak" id="blncetak"
                                  class="btn btn-icon btn-default btn-md"><span class="pcoded-micon"> <i class="fas fa-print"></i>   Cetak PDF </span></a>
                             </div>
@@ -248,7 +248,7 @@ $message=session('status');
                   </th>
 
               </tr>
-              {{-- <tr>
+              <tr>
                   <th colspan="2">
                     Data  Pemasukan Denda
                   </th>
@@ -261,7 +261,7 @@ $message=session('status');
                       <strong>{{Fungsi::rupiah($totalnominaldenda)}}</strong>
                   </th>
 
-              </tr> --}}
+              </tr>
               <tr>
                   <th colspan="2">
                     Data  Pengeluaran

@@ -12,141 +12,154 @@ class adminpemasukancontroller extends Controller
 {
     public function index(Request $request)
     {
-        if($this->checkauth('admin')==='404'){
-            return redirect(URL::to('/').'/404')->with('status','Halaman tidak ditemukan!')->with('tipe','danger')->with('icon','fas fa-trash');
+        if ($this->checkauth('admin') === '404') {
+            return redirect(URL::to('/') . '/404')->with('status', 'Halaman tidak ditemukan!')->with('tipe', 'danger')->with('icon', 'fas fa-trash');
         }
 
         #WAJIB
-        $pages='pemasukan';
-        $jmldata='0';
-        $datas='0';
+        $pages = 'pemasukan';
+        $jmldata = '0';
+        $datas = '0';
 
 
-        $datas=DB::table('pemasukan')
-        ->orderBy('created_at','desc')
-        ->paginate(Fungsi::paginationjml());
+        $datas = DB::table('pemasukan')
+            ->orderBy('created_at', 'desc')
+            ->paginate(Fungsi::paginationjml());
 
+        $month = date('m');
+        $year = date('Y');
+        $totalnominaldenda = DB::table('pengembaliandetail')->whereMonth('tgl_dikembalikan', $month)->whereYear('tgl_dikembalikan', $year)->orderBy('tgl_dikembalikan', 'desc')->sum('totaldenda');
+        $dataDenda = (object)[];
+        $bln = Fungsi::tanggalindobln("01-{$month}-{$year}");
+        $dataDenda->nama = "Denda Bulan {$bln} {$year}";
+        $dataDenda->nominal = $totalnominaldenda;
+        $dataDenda->catatan = "Data diambil data Proses Peminjaman dan  Pengembalian buku bulan {$bln} {$year}";
+        $dataDenda->tglbayar = "{$year}-{$month}-01";
+        // array_push($datas, $dataDenda);
+
+        // dd($datas, $totalnominaldenda, $dataDenda);
         // $anggotakategori = DB::table('kategori')->where('prefix','ddc')->get();
 
-        return view('admin.pemasukan.index',compact('pages','datas','request'));
+        return view('admin.pemasukan.index', compact('pages', 'datas', 'request', 'dataDenda'));
         // return view('admin.beranda');
     }
-    
+
     public function cari(Request $request)
     {
         // dd($request);
-        $cari=$request->cari;
+        $cari = $request->cari;
 
         #WAJIB
-        $pages='pemasukan';
-        $jmldata='0';
-        $datas='0';
+        $pages = 'pemasukan';
+        $jmldata = '0';
+        $datas = '0';
 
 
-    $datas=DB::table('pemasukan')
-    // ->where('nis','like',"%".$cari."%")
-    ->where('nama','like',"%".$cari."%")
-    ->orWhere('kategori_nama','like',"%".$cari."%")
-    // ->orWhere('tglbayar','like',"%".$cari."%")
-    // ->orWhere('tipe','like',"%".$cari."%")
-    ->paginate(Fungsi::paginationjml());
+        $datas = DB::table('pemasukan')
+            // ->where('nis','like',"%".$cari."%")
+            ->where('nama', 'like', "%" . $cari . "%")
+            ->orWhere('kategori_nama', 'like', "%" . $cari . "%")
+            // ->orWhere('tglbayar','like',"%".$cari."%")
+            // ->orWhere('tipe','like',"%".$cari."%")
+            ->paginate(Fungsi::paginationjml());
 
 
 
-    // $bukurak = DB::table('bukurak')->get();
-    // $bukukategori = DB::table('kategori')->where('prefix','ddc')->get();
+        // $bukurak = DB::table('bukurak')->get();
+        // $bukukategori = DB::table('kategori')->where('prefix','ddc')->get();
 
-    return view('admin.pemasukan.index',compact('pages','datas','request'));
+        return view('admin.pemasukan.index', compact('pages', 'datas', 'request'));
     }
     public function store(Request $request)
     {
         // dd($request);
         // dd($request);
-        $request->validate([
-            'nama'=>'required|unique:pemasukan,nama',
-            'kategori_nama'=>'required',
-            'tglbayar'=>'required',
-            'nominal'=>'required',
+        $request->validate(
+            [
+                'nama' => 'required|unique:pemasukan,nama',
+                'kategori_nama' => 'required',
+                'tglbayar' => 'required',
+                'nominal' => 'required',
 
 
-        ],
-        [
-            'nama.required'=>'Nama Harus diisi',
+            ],
+            [
+                'nama.required' => 'Nama Harus diisi',
 
-        ]);
-        
-       DB::table('pemasukan')->insert(
-        array(
-               'nama'     =>   $request->nama,
-               'kategori_nama'     =>   $request->kategori_nama,
-               'tglbayar'     =>   $request->tglbayar,
-               'catatan'     =>   $request->catatan,
-               'nominal'     =>   $request->nominal,
-               'created_at'=>date("Y-m-d H:i:s"),
-               'updated_at'=>date("Y-m-d H:i:s")
-        ));
+            ]
+        );
 
-        return redirect()->back()->with('status','Data berhasil di tambahkan!')->with('tipe','success');
-    
+        DB::table('pemasukan')->insert(
+            array(
+                'nama'     =>   $request->nama,
+                'kategori_nama'     =>   $request->kategori_nama,
+                'tglbayar'     =>   $request->tglbayar,
+                'catatan'     =>   $request->catatan,
+                'nominal'     =>   $request->nominal,
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
+            )
+        );
+
+        return redirect()->back()->with('status', 'Data berhasil di tambahkan!')->with('tipe', 'success');
     }
-    public function show(Request $request,pemasukan $id)
+    public function show(Request $request, pemasukan $id)
     {
         // dd($id);
         #WAJIB
-        $pages='pemasukan';
-        $datas=$id;
-        
+        $pages = 'pemasukan';
+        $datas = $id;
 
-        return view('admin.pemasukan.edit',compact('pages','datas','request'));
+
+        return view('admin.pemasukan.edit', compact('pages', 'datas', 'request'));
     }
-    public function proses_update($request,$datas)
+    public function proses_update($request, $datas)
     {
-        $request->validate([
-            'nama'=>'required',
-            'kategori_nama'=>'required',
-            'tglbayar'=>'required',
-            'nominal'=>'required',
+        $request->validate(
+            [
+                'nama' => 'required',
+                'kategori_nama' => 'required',
+                'tglbayar' => 'required',
+                'nominal' => 'required',
 
 
-        ],
-        [
-            'nama.required'=>'Nama Harus diisi',
+            ],
+            [
+                'nama.required' => 'Nama Harus diisi',
 
-        ]);
-    
+            ]
+        );
 
-       
-        pemasukan::where('id',$datas->id)
-        ->update([
-            'nama'     =>   $request->nama,
-            'kategori_nama'     =>   $request->kategori_nama,
-            'tglbayar'     =>   $request->tglbayar,
-            'catatan'     =>   $request->catatan,
-            'nominal'     =>   $request->nominal,
-           'updated_at'=>date("Y-m-d H:i:s")
-        ]);
 
-        
+
+        pemasukan::where('id', $datas->id)
+            ->update([
+                'nama'     =>   $request->nama,
+                'kategori_nama'     =>   $request->kategori_nama,
+                'tglbayar'     =>   $request->tglbayar,
+                'catatan'     =>   $request->catatan,
+                'nominal'     =>   $request->nominal,
+                'updated_at' => date("Y-m-d H:i:s")
+            ]);
     }
 
     public function update(Request $request, pemasukan $id)
     {
-        $this->proses_update($request,$id);
+        $this->proses_update($request, $id);
 
-            return redirect()->back()->with('status','Data berhasil diupdate!')->with('tipe','success')->with('icon','fas fa-edit');
+        return redirect()->back()->with('status', 'Data berhasil diupdate!')->with('tipe', 'success')->with('icon', 'fas fa-edit');
     }
-    
+
     public function destroy($id)
     {
         pemasukan::destroy($id);
-        return redirect()->back()->with('status','Data berhasil dihapus!')->with('tipe','info')->with('icon','fas fa-trash');
-    
+        return redirect()->back()->with('status', 'Data berhasil dihapus!')->with('tipe', 'info')->with('icon', 'fas fa-trash');
     }
 
     public function multidel(Request $request)
     {
-        
-        $ids=$request->ids;
+
+        $ids = $request->ids;
 
         // $datasiswa = DB::table('siswa')->where('id',$ids)->get();
         // foreach($datasiswa as $ds){
@@ -156,24 +169,23 @@ class adminpemasukancontroller extends Controller
         // dd($request);
 
         // DB::table('tagihansiswa')->where('siswa_nis', $ids)->where('tapel_nama',$this->tapelaktif())->delete();
-        pemasukan::whereIn('id',$ids)->delete();
+        pemasukan::whereIn('id', $ids)->delete();
 
-        
+
         // load ulang
-     
+
         #WAJIB
-        $pages='pemasukan';
-        $jmldata='0';
-        $datas='0';
+        $pages = 'pemasukan';
+        $jmldata = '0';
+        $datas = '0';
 
 
-        $datas=DB::table('pemasukan')
-        ->orderBy('created_at','desc')
-        ->paginate(Fungsi::paginationjml());
+        $datas = DB::table('pemasukan')
+            ->orderBy('created_at', 'desc')
+            ->paginate(Fungsi::paginationjml());
 
         // $anggotakategori = DB::table('kategori')->where('prefix','ddc')->get();
 
-        return view('admin.pemasukan.index',compact('pages','datas','request'));
-
+        return view('admin.pemasukan.index', compact('pages', 'datas', 'request'));
     }
 }

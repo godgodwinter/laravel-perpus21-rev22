@@ -353,6 +353,8 @@ $message=session('status');
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                        <a href="{{ asset('assets/doc/perpus-pengeluaran.xlsx') }}" target="_blank"><button type="button" class="btn btn-success" >Contoh Data</button></a>
+
                       </div>
                       <div class="modal-body">
 

@@ -51,8 +51,7 @@ $message=session('status');
     <th> KD Buku - Judul Buku </th>
     <th class="text-center"> Pengarang </th>
     <th class="text-center"> Jumlah </th>
-    <th class="text-center"> Buku Tersedia </th>
-    <th class="text-center"> Jumlah akan dipinjam </th>
+    <th class="text-center"> Tersedia </th>
     <th class="text-center"> Dipinjam </th>
     <th width="100px" class="text-center">Aksi</th>
 </tr>
@@ -155,8 +154,6 @@ $message=session('status');
         $cekjmldipinjam = DB::table('bukudetail')->where('buku_kode',$data->kode)->where('status','dipinjam')->count();
     @endphp
     <td class="text-center">{{$cekjml}}</td>
-
-    <td class="text-center">{{$cekjmlada}}</td>
     <td class="text-center">
         {{-- {{$cekjmlada}}   --}}
         @if ($cekjmlada>0)

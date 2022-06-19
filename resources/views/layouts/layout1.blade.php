@@ -265,16 +265,22 @@ crossorigin="anonymous"></script> --}}
         </a>
       </li>
           <li class="nav-header">PROSES</li>
+          {{-- <li class="nav-item">
+            <a href="{{route('admin.bukuPemesanan')}}" class="nav-link">
+              <i class="fas fa-book"></i>
+              <p>Pemesanan Buku</p>
+            </a>
+          </li> --}}
           <li class="nav-item">
             <a href="{{route('admin.peminjaman')}}" class="nav-link">
               <i class="fas fa-calendar-plus"></i>
-              <p>Pinjam</p>
+              <p>Peminjaman</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{route('admin.pengembalian')}}" class="nav-link">
               <i class="far fa-calendar-check"></i>
-              <p>Kembalikan</p>
+              <p>Pengembalian</p>
             </a>
           </li>
 
@@ -399,9 +405,15 @@ crossorigin="anonymous"></script> --}}
                     <p>Pengembalian</p>
                   </a>
                 </li>
+            </li>
 
               </ul>
-
+              <li class="nav-item">
+                <a href="{{ route('admin.laporan.pengunjung') }}" class="nav-link">
+                  <i class="fas fa-book"></i>
+                  <p>Pengunjung</p>
+                </a>
+              </li>
               @endif
 
             </ul>

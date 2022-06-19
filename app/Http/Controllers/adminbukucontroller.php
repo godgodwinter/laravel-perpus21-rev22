@@ -52,8 +52,83 @@ class adminbukucontroller extends Controller
         ));
         // return view('admin.beranda');
     }
+    public function bukuPemesanan(Request $request)
+    {
+        if ($this->checkauth('admin') === '404') {
+            return redirect(URL::to('/') . '/404')->with('status', 'Halaman tidak ditemukan!')->with('tipe', 'danger')->with('icon', 'fas fa-trash');
+        }
 
 
+
+        // $jmlbuku = buku::count();
+        $generatekodepanggil = Fungsi::autokodepanggilbuku(1);
+        // dd($generatekodepanggil);
+        // $jmlbuku++;
+        $kodepanggil = '' . str_pad($generatekodepanggil, 6, '0', STR_PAD_LEFT);
+
+        // dd($kodepanggil);
+        #WAJIB
+        $pages = 'buku';
+        $jmldata = '0';
+        $datas = '0';
+
+
+        $datas = DB::table('buku')
+            ->orderBy('kode', 'asc')
+            ->paginate(Fungsi::paginationjml());
+
+        // $bukurak = DB::table('bukurak')->get();
+        $bukukategori = DB::table('kategori')->where('prefix', 'ddc')->get();
+
+        return view('admin.buku.bukuPemesanan', compact(
+            'pages'
+            // ,'bukurak'
+            ,
+            'bukukategori',
+            'datas',
+            'request',
+            'kodepanggil'
+        ));
+        // return view('admin.beranda');
+    }
+
+
+    public function bukuPemesanancari(Request $request)
+    {
+        // dd($request);
+        $cari = $request->cari;
+
+        #WAJIB
+        $pages = 'buku';
+        $jmldata = '0';
+        $datas = '0';
+
+        $generatekodepanggil = Fungsi::autokodepanggilbuku(1);
+        // dd($generatekodepanggil);
+        // $jmlbuku++;
+        $kodepanggil = '' . str_pad($generatekodepanggil, 6, '0', STR_PAD_LEFT);
+
+        $datas = DB::table('buku')
+            // ->where('nis','like',"%".$cari."%")
+            ->where('nama', 'like', "%" . $cari . "%")
+            ->orWhere('kode', 'like', "%" . $cari . "%")
+            ->paginate(Fungsi::paginationjml());
+
+
+
+        // $bukurak = DB::table('bukurak')->get();
+        $bukukategori = DB::table('kategori')->where('prefix', 'ddc')->get();
+
+        return view('admin.buku.bukuPemesanan', compact(
+            'pages'
+            // ,'bukurak'
+            ,
+            'bukukategori',
+            'datas',
+            'request',
+            'kodepanggil'
+        ));
+    }
     public function cari(Request $request)
     {
         // dd($request);
