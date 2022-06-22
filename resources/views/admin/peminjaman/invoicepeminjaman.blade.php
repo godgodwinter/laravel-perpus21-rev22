@@ -39,15 +39,15 @@ $message=session('status');
             icon: '{{$tipe}}',
             title: '{{$message}}'
         });
-         
+
     @if((session('clearlocal')=='yes'))
-   
-        localStorage.clear(); 
+
+        localStorage.clear();
         $("#tbody").empty();
    @endif
-   
+
     });
-   
+
 
 </script>
 @endif
@@ -90,12 +90,12 @@ $message=session('status');
                         <div class="col-12 col-md-12 col-lg-12">
                                 {{-- <form action="#" method="post">
                                 @csrf --}}
-                              
+
 
                                 <form action="/admin/invoice/peminjaman" method="post" id="formanggota">
                                     @csrf
                                     <div class="card-body">
-                                        
+
                                         <div class="form-group">
                                             <label>Pilih Transaksi :</label>
                                             <select class="form-control form-control-md" id="tags" select2 select2-hidden-accessible  name="kodetrans" required>
@@ -106,16 +106,18 @@ $message=session('status');
                                             $dataselect=DB::table('peminjaman')
                                                          ->orderBy('created_at','desc')
                                                 ->get();
-                                                @endphp 
-                                               
+                                                @endphp
+
                                             @foreach ($dataselect as $t)
-                                                <option value="{{ $t->kodetrans }}" >{{ $t->kodetrans }} - {{ $t->nomeridentitas }} - {{ $t->nama }}</option>
+                                                <option value="{{ $t->kodetrans }}" >
+                                                    {{-- {{ $t->kodetrans }} -  --}}
+                                                    {{ $t->nomeridentitas }} - {{ $t->nama }}</option>
                                             @endforeach
                                             </select>
                                         </div>
-                                        
-                                       
-                                        
+
+
+
                                         <div class="row" id="forminputan">
                                             {{-- <div class="form-group col-md-12 col-12">
                                             <label for="nama">Kode Panggil</label>
@@ -131,13 +133,13 @@ $message=session('status');
                                         <button class="btn btn-success" id="kirimdata">Periksa</button>
                                     </div>
                                 </form>
-                                
-                                  
+
+
                                 <script type="text/javascript">
                                     var values = $('#tags option[selected="true"]').map(function() { return $(this).val(); }).get();
-        
+
                                       // you have no need of .trigger("change") if you dont want to trigger an event
-                                      $('#tags').select2({ 
+                                      $('#tags').select2({
                                     placeholder: "Pilih Anggota"
                                    });
 
@@ -145,7 +147,7 @@ $message=session('status');
                                     theme: "classic"
                                     });
 
-                                    
+
                                 // $("select#tags").change(function(e){
                                 //     var selectedText = $(this).find("option:selected").val();
                                 //      kode = $(this).find("option:selected").val();
@@ -166,7 +168,7 @@ $message=session('status');
             </div>
         </div>
 
-        
+
 
 </section>
 <!-- /.content -->
