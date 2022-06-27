@@ -39,16 +39,16 @@ $message=session('status');
             icon: '{{$tipe}}',
             title: '{{$message}}'
         });
-         
+
     @if((session('clearlocal')=='yes'))
-   
+
    localStorage.removeItem("daftarbuku");
                                        inputdaftarbuku.value = '';
                                        $("#tbody").empty();
    @endif
-   
+
     });
-   
+
 
 </script>
 @endif
@@ -110,7 +110,7 @@ $message=session('status');
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                         
+
                                         <div class="form-group">
                                            <label>Pilih Buku :</label>
                                             <select class="form-control form-control-md" id="tagsbuku" select2 select2-hidden-accessible  name="nomeridentitas" required>
@@ -119,20 +119,20 @@ $message=session('status');
                                             //     ->count();
                                             $dataselect=DB::table('buku')
                                                 ->get();
-                                                @endphp 
-                                               
+                                                @endphp
+
                                             @foreach ($dataselect as $t)
                                                 <option value="{{ $t->kode }}" >{{ $t->kode }} - {{ $t->nama }}</option>
                                             @endforeach
                                             </select>
                                         </div>
-{{-- 
+{{--
                                         <div class="form-group col-md-12 col-12">
                                             <label for="nama">Kode Panggil <code>*) Gunakan Barcode Scanner </code></label>
                                             <input type="text" name="nama" id="nama" class="form-control" placeholder=""
                                                 required>
                                         </div> --}}
-                                        
+
                                         <div class="form-group col-md-12 col-12">
                                             <label for="jml">Jumlah dipinjam<code>*)</code></label>
                                             <input type="number" name="jml" id="jml" class="form-control" placeholder="" value="" disabled
@@ -150,7 +150,7 @@ $message=session('status');
                                 <form action="/admin/{{ $pages }}" method="post">
                                     @csrf
                                     <div class="card-body">
-                                        
+
                                         <div class="form-group">
                                             <label>Pilih Anggota :</label>
                                             <select class="form-control form-control-md" id="tags" select2 select2-hidden-accessible  name="nomeridentitas" required>
@@ -159,26 +159,26 @@ $message=session('status');
                                             //     ->count();
                                             $dataselect=DB::table('anggota')
                                                 ->get();
-                                                @endphp 
-                                               
+                                                @endphp
+
                                             @foreach ($dataselect as $t)
                                                 <option value="{{ $t->nomeridentitas }}" >{{ $t->nomeridentitas }} - {{ $t->nama }}</option>
                                             @endforeach
                                             </select>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label>Pilih Jaminan :</label>
                                             <select class="form-control form-control-md" id="tags" select2 select2-hidden-accessible  name="jaminan_tipe" required>
-                                          
+
                                                 <option >Kartu Pelajar</option>
                                                 <option >KTP</option>
                                                 <option >SIM</option>
                                                 <option >Lainya</option>
-                                           
+
                                             </select>
                                         </div>
-                                        
+
                                         <div class="form-group col-md-12 col-12">
                                             <label for="jaminan_nama">Identitas <code>*) Jika kosong maka akan menggunakan Nomer Identitas dari Anggota </code></label>
                                             <input type="text" name="jaminan_nama" id="jaminan_nama" class="form-control" placeholder=""
@@ -199,24 +199,24 @@ $message=session('status');
                                         <button class="btn btn-success" id="kirimdata">Selesai</button>
                                     </div>
                                 </form>
-                                
+
                             <script type="text/javascript">
                                 var values = $('#tags option[selected="true"]').map(function() { return $(this).val(); }).get();
-    
+
                                   // you have no need of .trigger("change") if you dont want to trigger an event
-                                  $('#tags').select2({ 
+                                  $('#tags').select2({
                                 placeholder: "Pilih Anggota"
                                });
-                               
+
                                var values = $('#tagsbuku option[selected="true"]').map(function() { return $(this).val(); }).get();
-                                    
+
                                     // you have no need of .trigger("change") if you dont want to trigger an event
-                                    $('#tagsbuku').select2({ 
+                                    $('#tagsbuku').select2({
                                 placeholder: "Pilih Buku"
                                 });
 
                                 // $(document).ready(function () {
-                                
+
                                     let maxdata = 0;
                                     let isbn = 0;
                                     let pengarang = 0;
@@ -226,15 +226,15 @@ $message=session('status');
                                     let nama = 0;
                                     let jml = 0;
                                     let tersedia = 0;
-                                    
-                                  
+
+
                                 //jika dipilih maka akan mengubah inputan jumlah
                                 $("select#tagsbuku").change(function(e){
                                     // var selectedText = $(this).find("option:selected").text();
                                     var selectedText = $(this).find("option:selected").val();
                                      kodebuku = $(this).find("option:selected").val();
 
-                                    
+
                                     $.ajaxSetup({
                                             headers: {
                                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
@@ -243,8 +243,8 @@ $message=session('status');
                                         });
 
                                     //periksa apakan ada buku tersedia
-                                    
-                                        
+
+
                                         // e.preventDefault();
                                         e.preventDefault();
 
@@ -272,10 +272,10 @@ $message=session('status');
                                                             if(maxdata!=0){
                                                 var jmlsebelumnya=0;
                                                 tersedia=maxdata;
-                                                for (i = 0; i < localStorage.length; i++)  
-                                                {  
-                                                    var obj = localStorage.getItem(localStorage.key(i)); 
-                                                    var buku = JSON.parse(obj);  
+                                                for (i = 0; i < localStorage.length; i++)
+                                                {
+                                                    var obj = localStorage.getItem(localStorage.key(i));
+                                                    var buku = JSON.parse(obj);
                                                     if(buku.kode==kodebuku){
                                                         // alert(buku.kode);
                                                         jmlsebelumnya=buku.jml;
@@ -293,9 +293,9 @@ $message=session('status');
                                                             $("input#jml").prop('min', 1);
                                                             $("input#jml").prop('max', tersedia);
 
-                                                        }    
+                                                        }
                                                             }else{
-                                                                
+
                                                                 //  maxdata = 0;
                                                                  isbn = 0;
                                                                  pengarang = 0;
@@ -305,7 +305,7 @@ $message=session('status');
                                                             $("input#jml").prop('value', 0);
                                                             $("input#jml").prop('min', 0);
                                                             $("input#jml").prop('max', tersedia);
-                                                                
+
                                                                 var Toast = Swal.mixin({
                                                                     toast: true,
                                                                     position: 'top-end',
@@ -315,7 +315,7 @@ $message=session('status');
 
                                                                 Toast.fire({
                                                                     icon: 'error',
-                                                                    title: 
+                                                                    title:
                                                                         'Buku tidak tersedia! atau telah dipinjam semua '
                                                                 });
                                                             }
@@ -325,10 +325,10 @@ $message=session('status');
 
 
                                 });
-                                
+
                                 document.querySelector('#isikan').addEventListener('click', function (
                                         e) {
-                                            
+
                                             jml = $("input[name=jml]").val();
                                             // jmlbuku=jml;
                                             if(parseInt(jml)>parseInt(tersedia)){
@@ -341,36 +341,36 @@ $message=session('status');
 
                                                                 Toast.fire({
                                                                     icon: 'error',
-                                                                    title: 
+                                                                    title:
                                                                         'Gagal, Jumlah melebihi stok yang tersedia! '
                                                                 });
                                             }else{
                                                 if(tersedia!=0){
                                                         //Jika buku masih tersedia
                                                     var jmlsebelumnya=0;
-                                                    for (i = 0; i < localStorage.length; i++)  
-                                                    {  
-                                                        var obj = localStorage.getItem(localStorage.key(i)); 
-                                                        var buku = JSON.parse(obj);  
+                                                    for (i = 0; i < localStorage.length; i++)
+                                                    {
+                                                        var obj = localStorage.getItem(localStorage.key(i));
+                                                        var buku = JSON.parse(obj);
                                                         if(buku.kode==kodebuku){
                                                             // alert(buku.kode);
                                                             jmlsebelumnya=buku.jml;
                                                         }
                                                     }
-                                                        
-                                                                        var buku_ = {};  
-                                                                                buku_.kode = kodebuku;  
-                                                                                buku_.nama = nama;   
-                                                                                buku_.pengarang = pengarang;   
-                                                                                buku_.penerbit = penerbit;   
-                                                                                buku_.bukukategori_nama = bukukategori_nama;   
-                                                                                buku_.jml = parseInt(jml)+parseInt(jmlsebelumnya);   
-                                                                                // var ItemId = "data-" + buku_.id;  
-                                                                                var ItemId = buku_.kode;  
-                                                                                localStorage.setItem(ItemId, JSON.stringify(buku_));  
-                                                                                
 
-                                                                    
+                                                                        var buku_ = {};
+                                                                                buku_.kode = kodebuku;
+                                                                                buku_.nama = nama;
+                                                                                buku_.pengarang = pengarang;
+                                                                                buku_.penerbit = penerbit;
+                                                                                buku_.bukukategori_nama = bukukategori_nama;
+                                                                                buku_.jml = parseInt(jml)+parseInt(jmlsebelumnya);
+                                                                                // var ItemId = "data-" + buku_.id;
+                                                                                var ItemId = buku_.kode;
+                                                                                localStorage.setItem(ItemId, JSON.stringify(buku_));
+
+
+
 
                                                     var Toast = Swal.mixin({
                                                                         toast: true,
@@ -381,27 +381,27 @@ $message=session('status');
 
                                                                     Toast.fire({
                                                                         icon: 'success',
-                                                                        title: 
+                                                                        title:
                                                                             'Buku berhasil ditambahkan! '
                                                                     });
                                                                 $("input#jml").prop('disabled', true);
-                                                
-                                                    
 
-                                            
-                                                    
-                                                    
-                                                    // var buku_ = {};  
-                                                    //                             buku_.kode = kodebuku;  
-                                                    //                             buku_.nama = nama;   
-                                                    //                             buku_.pengarang = pengarang;   
-                                                    //                             buku_.penerbit = penerbit;   
-                                                    //                             buku_.bukukategori_nama = bukukategori_nama;   
-                                                    //                             buku_.jml = jml;   
-                                                    //                             // var ItemId = "data-" + buku_.id;  
-                                                    //                             var ItemId = buku_.kode;  
-                                                    //                             localStorage.setItem(ItemId, JSON.stringify(buku_));  
-                                                                                
+
+
+
+
+
+                                                    // var buku_ = {};
+                                                    //                             buku_.kode = kodebuku;
+                                                    //                             buku_.nama = nama;
+                                                    //                             buku_.pengarang = pengarang;
+                                                    //                             buku_.penerbit = penerbit;
+                                                    //                             buku_.bukukategori_nama = bukukategori_nama;
+                                                    //                             buku_.jml = jml;
+                                                    //                             // var ItemId = "data-" + buku_.id;
+                                                    //                             var ItemId = buku_.kode;
+                                                    //                             localStorage.setItem(ItemId, JSON.stringify(buku_));
+
 
                                                     //                 daftarbuku.push(kodebuku);
                                                     //                 localStorage.setItem(
@@ -410,10 +410,10 @@ $message=session('status');
                                                     //                         daftarbuku));
 
                                                     location.reload();
-                                              
+
 
                                             }else{
-                                                
+
                                                 var Toast = Swal.mixin({
                                                                     toast: true,
                                                                     position: 'top-end',
@@ -423,7 +423,7 @@ $message=session('status');
 
                                                                 Toast.fire({
                                                                     icon: 'error',
-                                                                    title: 
+                                                                    title:
                                                                         'Gagal, Buku tidak tersedia! atau telah dipinjam semua '
                                                                 });
 
@@ -435,11 +435,11 @@ $message=session('status');
                                 {{-- </form> --}}
                                 <script>
                                     $(function () {
-                                        
-                                                for (i = 0; i < localStorage.length; i++)  
-                                                {  
-                                                    var obj = localStorage.getItem(localStorage.key(i)); 
-                                                    var buku = JSON.parse(obj);  
+
+                                                for (i = 0; i < localStorage.length; i++)
+                                                {
+                                                    var obj = localStorage.getItem(localStorage.key(i));
+                                                    var buku = JSON.parse(obj);
                                                     // alert(buku.kode);
                                     //                 data_i = JSON.parse(localStorage.getItem(daftarbuku[i]));
                                     //         // data.i = JSON.parse(localStorage.getItem('data-'+1234));
@@ -447,7 +447,7 @@ $message=session('status');
                                             '<input name="daftarbuku" type="text" id="inputdaftarbuku" value="' +
                                             buku.kode + '" />');
 
-                                                                    
+
                                         $("#tbody").append(
                                             '<tr id="'+buku.kode+'"><td class="text-center">'+(i+1)+'</td><td>'+buku.kode+'</td><td>'+buku.nama+'</td><td>'+buku.jml+' Buku</td><td>'+buku.bukukategori_nama+'</td><td><button class="btn btn-icon btn-danger btn-sm" id="hapusbuku'+buku.kode+'"><span class="pcoded-micon"> <i class="fas fa-trash"></i></span></button></td> </tr>');
 
@@ -456,7 +456,7 @@ $message=session('status');
                                                 // alert(buku.kode);
                                         // localStorage.removeItem("daftarbuku");
                                         localStorage.removeItem(buku.kode);
-                                        
+
                                         // const index = daftarbuku.indexOf(buku.kode);
                                         // alert(index);
 
@@ -472,7 +472,7 @@ $message=session('status');
                                     });
                                                 }
 
-                                       
+
 
                                         var Toast = Swal.mixin({
                                             toast: true,
@@ -488,16 +488,16 @@ $message=session('status');
 
                                     });
 
-                               
+
 
                                     document.querySelector('#clear').addEventListener('click', function (e) {
                                         // localStorage.removeItem("daftarbuku");
                                         // inputdaftarbuku.value = '';
-                                        localStorage.clear(); 
+                                        localStorage.clear();
                                         $("#tbody").empty();
                                     });
 
-                                
+
 
                                 </script>
 

@@ -587,7 +587,9 @@ $message=session('status');
 
 
                                         $("#tbody").append(
-                                            '<tr id="'+buku.kode+'"><td class="text-center">'+(i+1)+'</td><td>'+buku.kode+'</td><td>'+buku.nama+'</td><td>'+buku.jml+' Buku</td><td>'+buku.bukukategori_nama+'</td><td><button class="btn btn-icon btn-danger btn-sm" id="hapusbuku'+buku.kode+'"><span class="pcoded-micon"> <i class="fas fa-trash"></i></span></button></td> </tr>');
+                                            '<tr id="'+buku.kode+'"><td class="text-center">'+(i+1)+'</td><td>'+buku.kode+'</td><td>'+buku.nama+'</td><td>'+buku.jml+' Buku</td><td><button class="btn btn-icon btn-danger btn-sm" id="hapusbuku'+buku.kode+'"><span class="pcoded-micon"> <i class="fas fa-trash"></i></span></button></td> </tr>');
+                                        // $("#tbody").append(
+                                        //     '<tr id="'+buku.kode+'"><td class="text-center">'+(i+1)+'</td><td>'+buku.kode+'</td><td>'+buku.nama+'</td><td>'+buku.jml+' Buku</td><td>'+buku.bukukategori_nama+'</td><td><button class="btn btn-icon btn-danger btn-sm" id="hapusbuku'+buku.kode+'"><span class="pcoded-micon"> <i class="fas fa-trash"></i></span></button></td> </tr>');
 
 
                                             document.querySelector('#hapusbuku'+buku.kode).addEventListener('click', function (e) {
@@ -667,7 +669,7 @@ $message=session('status');
                                             <th> Kode Buku </th>
                                             <th> Judul</th>
                                             <th> Jumlah</th>
-                                            <th> Kategori</th>
+                                            {{-- <th> Kategori</th> --}}
                                             <th width="5%" class="text-center">Aksi</th>
                                         </tr>
                                 </thead>
