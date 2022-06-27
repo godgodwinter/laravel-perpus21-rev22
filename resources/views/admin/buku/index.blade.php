@@ -52,7 +52,7 @@ $message=session('status');
     <th class="text-center"> Pengarang </th>
     <th class="text-center"> Jumlah </th>
     <th class="text-center"> Buku Tersedia </th>
-    <th class="text-center"> Jumlah akan dipinjam </th>
+    {{-- <th class="text-center"> Jumlah akan dipinjam </th> --}}
     <th class="text-center"> Dipinjam </th>
     <th class="text-center">  Rak </th>
     <th width="100px" class="text-center">Aksi</th>
@@ -158,7 +158,7 @@ $message=session('status');
     <td class="text-center">{{$cekjml}}</td>
 
     <td class="text-center">{{$cekjmlada}}</td>
-    <td class="text-center">
+    {{-- <td class="text-center"> --}}
         {{-- {{$cekjmlada}}   --}}
         @if ($cekjmlada>0)
         {{-- <button class="btn btn-icon btn-info btn-sm "  data-toggle="tooltip" data-placement="top" title="Pinjam!" id="isikan{{ $data->kode }}"><i class="fas fa-shopping-cart"></i>
@@ -166,7 +166,7 @@ $message=session('status');
         @else
         {{-- <button class="btn btn-icon btn-secondary btn-sm "  data-toggle="tooltip" data-placement="top" title="Pinjam!" ><i class="fas fa-shopping-cart" disabled></i> </button> --}}
         @endif
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-sm-6">
                 <input type="hidden" name="{{$data->kode}}" id="{{$data->kode}}" value="{{$data->kode}}">
                 <input type="number" class="form-control-plaintext form-control2 no-border text-center btn btn-light" name="tersedia{{$data->kode}}" id="tersedia{{$data->kode}}" value="{{$cekjmlada}}" min="0" max="{{$cekjmlada}}">
@@ -176,9 +176,9 @@ $message=session('status');
                 <button class="btn btn-icon btn-info btn-sm "  data-toggle="tooltip" data-placement="top" title="Pinjam!" id="isikan{{ $data->kode }}"><i class="fas fa-shopping-cart"></i>
                 </button>
             </div>
-        </div>
+        </div> --}}
 
-    </td>
+    {{-- </td> --}}
     <td class="text-center">
         {{-- <a href="{{ route("admin.pengembalian")}}" class="btn btn-icon btn-light btn-sm "  data-toggle="tooltip" data-placement="top" title="Kembalikan!" >  --}}
         {{$cekjmldipinjam}}

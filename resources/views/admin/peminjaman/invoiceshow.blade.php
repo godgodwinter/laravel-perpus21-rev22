@@ -3,7 +3,8 @@
 
 
 @section('title')
-Invoice Peminjaman <code>{{$datapinjam->kodetrans}}</code>
+Invoice Peminjaman
+{{-- <code>{{$datapinjam->kodetrans}}</code> --}}
 @endsection
 @section('linkpages')
 data{{ $pages }}
